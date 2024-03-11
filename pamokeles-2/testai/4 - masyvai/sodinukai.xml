@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<code><![CDATA[]]></code>
+<tests>
+ <test id="test_1">
+  <console>
+   <input visible="1"><![CDATA[]]></input>
+   <output visible="1"><![CDATA[]]></output>
+  </console>
+  <files>
+   <input filename="sodinukai_data.txt" visible="1"><![CDATA[50 60
+53
+45
+56
+54
+56]]></input>
+   <output filename="sodinukai_res.txt" visible="1"><![CDATA[52.8
+4
+54.8
+53 56 54 56]]></output>
+  </files>
+ </test>
+ <test id="test_2">
+  <console>
+   <input visible="1"><![CDATA[]]></input>
+   <output visible="1"><![CDATA[]]></output>
+  </console>
+  <files>
+   <input filename="sodinukai_data.txt" visible="1"><![CDATA[40 55
+42
+50
+53
+40
+56
+45]]></input>
+   <output filename="sodinukai_res.txt" visible="1"><![CDATA[47.7
+5
+46.0
+42 50 53 40 45]]></output>
+  </files>
+ </test>
+ <test id="test_3">
+  <console>
+   <input visible="1"><![CDATA[]]></input>
+   <output visible="1"><![CDATA[]]></output>
+  </console>
+  <files>
+   <input filename="sodinukai_data.txt" visible="1"><![CDATA[30 50
+25
+30
+40
+50
+55
+35]]></input>
+   <output filename="sodinukai_res.txt" visible="1"><![CDATA[39.2
+4
+38.8
+30 40 50 35]]></output>
+  </files>
+ </test>
+ <test id="test_4">
+  <console>
+   <input visible="1"><![CDATA[]]></input>
+   <output visible="1"><![CDATA[]]></output>
+  </console>
+  <files>
+   <input filename="sodinukai_data.txt" visible="1"><![CDATA[45 65
+44
+45
+60
+65
+70
+50]]></input>
+   <output filename="sodinukai_res.txt" visible="1"><![CDATA[55.7
+4
+55.0
+45 60 65 50]]></output>
+  </files>
+ </test>
+ <test id="test_5">
+  <console>
+   <input visible="1"><![CDATA[]]></input>
+   <output visible="1"><![CDATA[]]></output>
+  </console>
+  <files>
+   <input filename="sodinukai_data.txt" visible="1"><![CDATA[55 70
+60
+55
+70
+75
+65
+54]]></input>
+   <output filename="sodinukai_res.txt" visible="1"><![CDATA[63.2
+4
+62.5
+60 55 70 65]]></output>
+  </files>
+ </test>
+</tests>
