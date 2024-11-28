@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<code><![CDATA[#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+const int MAX_SUBJECTS = 100;
+
+struct Subject {
+    string name;
+    int chosenStudents;
+    int maxGroupSize;
+    int requiredGroups;
+};
+
+int calculateGroups(int chosen, int maxGroup) {
+    return (chosen + maxGroup - 1) / maxGroup; // Apskaičiuoja reikalingų grupių skaičių
+}
+
+void readData(Subject subjects[], int& subjectsCount, int& totalStudents, const string& fileName) {
+    std::ifstream file(fileName);
+    if (!file.is_open()) {
+        std::cerr << "Nepavyko atidaryti failo skaitymui: " << fileName << std::endl;
+        return;
+    }
+
+    file >> totalStudents;
+    subjectsCount = 0;
+    while (file >> subjects[subjectsCount].name >> subjects[subjectsCount].chosenStudents >> subjects[subjectsCount].maxGroupSize) {
+        subjects[subjectsCount].requiredGroups = calculateGroups(subjects[subjectsCount].chosenStudents, subjects[subjectsCount].maxGroupSize);
+        subjectsCount++;
+        if(subjectsCount >= MAX_SUBJECTS) break; // Saugiklis, kad neviršytume masyvo ribų
+    }
+    file.close();
+}
+
+void writeResults(const Subject subjects[], int subjectsCount, int totalStudents, const string& fileName) {
+    std::ofstream file(fileName);
+    if (!file.is_open()) {
+        std::cerr << "Nepavyko atidaryti failo rašymui: " << fileName << std::endl;
+        return;
+    }
+
+    file << "VISI DALYKAI:\n";
+    for (int i = 0; i < subjectsCount; ++i) {
+        file << subjects[i].name << " " << subjects[i].requiredGroups << "\n";
+    }
+
+    file << "ATRINKTI DALYKAI:\n";
+    bool found = false;
+    for (int i = 0; i < subjectsCount; ++i) {
+        if (subjects[i].chosenStudents < totalStudents / 2) {
+            file << subjects[i].name << " " << subjects[i].requiredGroups << "\n";
+            found = true;
+        }
+    }
+    if (!found) {
+        file << "Ne\n";
+    }
+    file.close();
+}
+
+int main() {
+    Subject subjects[MAX_SUBJECTS];
+    int subjectsCount, totalStudents;
+    readData(subjects, subjectsCount, totalStudents, "Duomenys.txt");
+    writeResults(subjects, subjectsCount, totalStudents, "Rezultatai.txt");
+    return 0;
+}]]></code>
+<tests>
+ <test id="test_1">
+  <console>
+   <input visible="1"><![CDATA[]]></input>
+   <output visible="1"><![CDATA[]]></output>
+  </console>
+  <files>
+   <input filename="Duomenys.txt" visible="1"><![CDATA[60
+Lietuviu 60 25
+Matematika 60 27
+Informatika 25 15
+Anglu 45 12
+Istorija 40 30]]></input>
+   <output filename="Rezultatai.txt" visible="1"><![CDATA[VISI DALYKAI:
+Lietuviu 3
+Matematika 3
+Informatika 2
+Anglu 4
+Istorija 2
+ATRINKTI DALYKAI:
+Informatika 2]]></output>
+  </files>
+ </test>
+ <test id="test_2">
+  <console>
+   <input visible="1"><![CDATA[]]></input>
+   <output visible="1"><![CDATA[]]></output>
+  </console>
+  <files>
+   <input filename="Duomenys.txt" visible="1"><![CDATA[60
+Lietuviu 60 25
+Matematika 60 27
+Informatika 35 15
+Anglu 45 12
+Istorija 40 30]]></input>
+   <output filename="Rezultatai.txt" visible="1"><![CDATA[VISI DALYKAI:
+Lietuviu 3
+Matematika 3
+Informatika 3
+Anglu 4
+Istorija 2
+ATRINKTI DALYKAI:
+Ne]]></output>
+  </files>
+ </test>
+ <test id="test_3">
+  <console>
+   <input visible="1"><![CDATA[]]></input>
+   <output visible="1"><![CDATA[]]></output>
+  </console>
+  <files>
+   <input filename="Duomenys.txt" visible="1"><![CDATA[100
+Daile 50 25
+Architektura 40 20
+Statyba 60 30
+Programavimas 80 40
+Biotechnologija 20 10]]></input>
+   <output filename="Rezultatai.txt" visible="1"><![CDATA[VISI DALYKAI:
+Daile 2
+Architektura 2
+Statyba 2
+Programavimas 2
+Biotechnologija 2
+ATRINKTI DALYKAI:
+Architektura 2
+Biotechnologija 2]]></output>
+  </files>
+ </test>
+ <test id="test_4">
+  <console>
+   <input visible="1"><![CDATA[]]></input>
+   <output visible="1"><![CDATA[]]></output>
+  </console>
+  <files>
+   <input filename="Duomenys.txt" visible="1"><![CDATA[60
+Filosofija 30 20
+Logika 15 15
+Etika 5 10
+Menai 25 10
+Muzika 10 5]]></input>
+   <output filename="Rezultatai.txt" visible="1"><![CDATA[VISI DALYKAI:
+Filosofija 2
+Logika 1
+Etika 1
+Menai 3
+Muzika 2
+ATRINKTI DALYKAI:
+Logika 1
+Etika 1
+Menai 3
+Muzika 2]]></output>
+  </files>
+ </test>
+ <test id="test_5">
+  <console>
+   <input visible="1"><![CDATA[]]></input>
+   <output visible="1"><![CDATA[]]></output>
+  </console>
+  <files>
+   <input filename="Duomenys.txt" visible="1"><![CDATA[40
+Informatika 30 15
+Ekonomika 10 10
+Psichologija 20 10
+Sociologija 5 5
+Teise 2 10]]></input>
+   <output filename="Rezultatai.txt" visible="1"><![CDATA[VISI DALYKAI:
+Informatika 2
+Ekonomika 1
+Psichologija 2
+Sociologija 1
+Teise 1
+ATRINKTI DALYKAI:
+Ekonomika 1
+Sociologija 1
+Teise 1]]></output>
+  </files>
+ </test>
+ <test id="test_6">
+  <console>
+   <input visible="1"><![CDATA[]]></input>
+   <output visible="1"><![CDATA[]]></output>
+  </console>
+  <files>
+   <input filename="Duomenys.txt" visible="1"><![CDATA[30
+Biologija 10 15
+Chemija 20 10
+Fizika 25 10
+Geografija 5 20
+Istorija 15 10]]></input>
+   <output filename="Rezultatai.txt" visible="1"><![CDATA[VISI DALYKAI:
+Biologija 1
+Chemija 2
+Fizika 3
+Geografija 1
+Istorija 2
+ATRINKTI DALYKAI:
+Biologija 1
+Geografija 1]]></output>
+  </files>
+ </test>
+</tests>
